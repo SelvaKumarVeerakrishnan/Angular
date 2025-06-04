@@ -1,0 +1,30 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "travel-booking-api", "travel-booking-api\travel-booking-api.csproj", "{55934649-3918-3452-1F55-B45925B0A78E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "travel-booking-api.Tests", "travel-booking-api.Tests\travel-booking-api.Tests.csproj", "{4EEB1177-A8CA-4647-9B1A-6A069DAB831D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55934649-3918-3452-1F55-B45925B0A78E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55934649-3918-3452-1F55-B45925B0A78E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55934649-3918-3452-1F55-B45925B0A78E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55934649-3918-3452-1F55-B45925B0A78E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EEB1177-A8CA-4647-9B1A-6A069DAB831D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EEB1177-A8CA-4647-9B1A-6A069DAB831D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EEB1177-A8CA-4647-9B1A-6A069DAB831D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EEB1177-A8CA-4647-9B1A-6A069DAB831D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {625BBD03-A31D-4CBA-A011-8C80BBCA71F3}
+	EndGlobalSection
+EndGlobal

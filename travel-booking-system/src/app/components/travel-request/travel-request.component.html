@@ -1,0 +1,209 @@
+<div class="travel-request-container">
+  <h1>Travel Requests</h1>
+
+  <mat-tab-group animationDuration="300ms" [(selectedIndex)]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)">
+    <!-- New Request Tab -->
+    <mat-tab label="New Request">
+      <div class="new-request-container">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{ isEditMode ? 'Edit Travel Request' : 'Create New Travel Request' }}</mat-card-title>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <form [formGroup]="travelRequestForm" (ngSubmit)="submitRequest()">
+              <!-- Destination -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Destination</mat-label>
+                <input matInput formControlName="destination" placeholder="Enter destination">
+                <mat-error *ngIf="travelRequestForm.get('destination')?.hasError('required')">
+                  Destination is required
+                </mat-error>
+                <mat-error *ngIf="travelRequestForm.get('destination')?.hasError('minlength')">
+                  Destination must be at least 2 characters
+                </mat-error>
+              </mat-form-field>
+              
+              <!-- Date Range -->
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+                  <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startPicker></mat-datepicker>
+                  <mat-error *ngIf="travelRequestForm.get('startDate')?.hasError('required')">
+                    Start date is required
+                  </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+                  <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endPicker></mat-datepicker>
+                  <mat-error *ngIf="travelRequestForm.get('endDate')?.hasError('required')">
+                    End date is required
+                  </mat-error>
+                  <mat-error *ngIf="travelRequestForm.get('endDate')?.hasError('dateRange')">
+                    End date must be after start date
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              
+              <!-- Purpose -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Purpose</mat-label>
+                <textarea matInput formControlName="purpose" placeholder="Enter purpose of travel" rows="3"></textarea>
+                <mat-error *ngIf="travelRequestForm.get('purpose')?.hasError('required')">
+                  Purpose is required
+                </mat-error>
+                <mat-error *ngIf="travelRequestForm.get('purpose')?.hasError('minlength')">
+                  Purpose must be at least 5 characters
+                </mat-error>
+              </mat-form-field>
+              
+              <!-- Estimated Cost -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Estimated Cost ($)</mat-label>
+                <input matInput type="number" formControlName="estimatedCost" placeholder="Enter estimated cost">
+                <span matPrefix>$&nbsp;</span>
+                <mat-error *ngIf="travelRequestForm.get('estimatedCost')?.hasError('required')">
+                  Estimated cost is required
+                </mat-error>
+                <mat-error *ngIf="travelRequestForm.get('estimatedCost')?.hasError('min')">
+                  Estimated cost must be greater than or equal to 0
+                </mat-error>
+              </mat-form-field>
+              
+              <!-- Status Dropdown (visible for admins in both new and edit modes) -->
+              <mat-form-field appearance="outline" class="full-width" *ngIf="isAdmin()">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                  <mat-option *ngFor="let status of statusOptions" [value]="status">
+                    {{ status }}
+                  </mat-option>
+                </mat-select>
+                <mat-hint>{{ isEditMode ? 'Change the status of this travel request' : 'Set the initial status of this travel request' }}</mat-hint>
+              </mat-form-field>
+              
+              <!-- Form Actions -->
+              <div class="form-actions">
+                <button mat-button type="button" (click)="resetForm()">Cancel</button>
+                <button 
+                  mat-raised-button 
+                  color="primary" 
+                  type="submit" 
+                  [disabled]="travelRequestForm.invalid || isSubmitting">
+                  {{ isEditMode ? 'Update' : 'Submit' }}
+                  <mat-spinner *ngIf="isSubmitting" diameter="20" class="button-spinner"></mat-spinner>
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+    
+    <!-- All Requests Tab -->
+    <mat-tab label="All Requests">
+      <div class="all-requests-container">
+        <!-- Filters -->
+        <div class="filters">
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select [(value)]="statusFilter" (selectionChange)="onStatusFilterChange($event.value)">
+              <mat-option value="all">All</mat-option>
+              <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput [(ngModel)]="searchText" (input)="onSearchChange($event)" placeholder="Search by destination or purpose">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <!-- Loading indicator -->
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+        <!-- Table -->
+        <div class="table-container" *ngIf="!isLoading">
+          <table mat-table [dataSource]="filteredRequests" matSort (matSortChange)="sortData($event)">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+              <td mat-cell *matCellDef="let request"> {{ request.id }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="destination">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Destination </th>
+              <td mat-cell *matCellDef="let request"> {{ request.destination }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="startDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+              <td mat-cell *matCellDef="let request"> {{ formatDate(request.startDate) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="endDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+              <td mat-cell *matCellDef="let request"> {{ formatDate(request.endDate) }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="purpose">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Purpose </th>
+              <td mat-cell *matCellDef="let request"> {{ request.purpose }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="estimatedCost">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Estimated Cost </th>
+              <td mat-cell *matCellDef="let request"> ${{ request.estimatedCost }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+              <td mat-cell *matCellDef="let request">
+                <!-- Regular users see status as text -->
+                <span [class]="getStatusClass(request.status)" *ngIf="!isAdmin()">{{ request.status }}</span>
+                
+                <!-- Admins see a dropdown to change status -->
+                <mat-select *ngIf="isAdmin()" [(value)]="request.status" 
+                            (selectionChange)="updateStatus(request.id, $event.value)"
+                            [class]="'status-select ' + getStatusClass(request.status)">
+                  <mat-option *ngFor="let status of statusOptions" [value]="status">
+                    {{ status }}
+                  </mat-option>
+                </mat-select>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let request">
+                <button mat-icon-button color="primary" (click)="editRequest(request)" matTooltip="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteTravelRequest(request.id)" matTooltip="Delete">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            
+            <!-- No results row -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell no-data-cell" [attr.colspan]="displayedColumns.length">
+                No travel requests found matching the filter criteria
+              </td>
+            </tr>
+          </table>
+
+          <!-- Pagination -->
+          <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

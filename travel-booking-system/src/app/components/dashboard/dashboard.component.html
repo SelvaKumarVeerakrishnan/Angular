@@ -1,0 +1,160 @@
+<div class="main-content">
+  <div class="dashboard-container">
+  <!-- Loading spinner -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <!-- Welcome section -->
+  <div class="welcome-section">
+    <h1>Welcome, {{ username || 'User' }}!</h1>
+    <div class="subtitle-container">
+      <span class="user-type-badge" [ngClass]="{'admin': userType === UserType.Admin}">
+        {{ getUserTypeLabel() }}
+      </span>
+      <p class="subtitle">Here's an overview of your travel requests</p>
+    </div>
+  </div>
+
+  <!-- Statistics cards -->
+  <div class="stats-grid">
+    <mat-card class="stats-card total" 
+             [ngClass]="{'active-filter': isFilterActive('all')}" 
+             (click)="filterRequests('all')" 
+             [matTooltip]="'Show all requests'">
+      <mat-card-content>
+        <div class="stats-icon">
+          <mat-icon>luggage</mat-icon>
+        </div>
+        <div class="stats-details">
+          <h2>{{ totalRequests }}</h2>
+          <p>Total Requests</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card pending" 
+             [ngClass]="{'active-filter': isFilterActive(TravelRequestStatus.Pending)}" 
+             (click)="filterRequests(TravelRequestStatus.Pending)" 
+             [matTooltip]="'Show pending requests'">
+      <mat-card-content>
+        <div class="stats-icon">
+          <mat-icon>pending</mat-icon>
+        </div>
+        <div class="stats-details">
+          <h2>{{ pendingRequests }}</h2>
+          <p>Pending Approval</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card approved" 
+             [ngClass]="{'active-filter': isFilterActive(TravelRequestStatus.Approved)}" 
+             (click)="filterRequests(TravelRequestStatus.Approved)" 
+             [matTooltip]="'Show approved requests'">
+      <mat-card-content>
+        <div class="stats-icon">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="stats-details">
+          <h2>{{ approvedRequests }}</h2>
+          <p>Approved</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card rejected" 
+             [ngClass]="{'active-filter': isFilterActive(TravelRequestStatus.Rejected)}" 
+             (click)="filterRequests(TravelRequestStatus.Rejected)" 
+             [matTooltip]="'Show rejected requests'">
+      <mat-card-content>
+        <div class="stats-icon">
+          <mat-icon>cancel</mat-icon>
+        </div>
+        <div class="stats-details">
+          <h2>{{ rejectedRequests }}</h2>
+          <p>Rejected</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" (click)="createNewRequest()">
+        <mat-icon>add</mat-icon>
+        New Travel Request
+      </button>
+      <button mat-raised-button color="accent" (click)="viewAllRequests()">
+        <mat-icon>list</mat-icon>
+        View All Requests
+      </button>
+    </div>
+  </div>
+
+  <!-- Recent travel requests -->
+  <div class="recent-requests-section">
+    <h2>Recent Travel Requests 
+      <span *ngIf="currentFilter !== 'all'" class="filter-indicator">
+        (Filtered by {{ currentFilter | titlecase }})
+      </span>
+    </h2>
+    
+    <div class="table-container">
+      <table mat-table [dataSource]="recentRequests" class="mat-elevation-z2">
+        <!-- Destination Column -->
+        <ng-container matColumnDef="destination">
+          <th mat-header-cell *matHeaderCellDef>Destination</th>
+          <td mat-cell *matCellDef="let request">{{ request.destination }}</td>
+        </ng-container>
+
+        <!-- Start Date Column -->
+        <ng-container matColumnDef="startDate">
+          <th mat-header-cell *matHeaderCellDef>Start Date</th>
+          <td mat-cell *matCellDef="let request">{{ formatDate(request.startDate) }}</td>
+        </ng-container>
+
+        <!-- End Date Column -->
+        <ng-container matColumnDef="endDate">
+          <th mat-header-cell *matHeaderCellDef>End Date</th>
+          <td mat-cell *matCellDef="let request">{{ formatDate(request.endDate) }}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let request">
+            <span class="status-badge" [ngClass]="getStatusClass(request.status)">
+              {{ request.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let request">
+            <button mat-icon-button color="primary" 
+                    [matTooltip]="'View details'" 
+                    (click)="viewRequest(request.id)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <!-- Empty state -->
+      <div *ngIf="recentRequests.length === 0 && !isLoading" class="empty-state">
+        <mat-icon>flight</mat-icon>
+        <p>No travel requests found</p>
+        <button mat-raised-button color="primary" (click)="createNewRequest()">Create Your First Request</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <div class="logo-container">
+    <a routerLink="/" class="logo">
+      <span class="logo-text">Travel Booking System</span>
+    </a>
+  </div>
+
+  <span class="spacer"></span>
+
+  <!-- Navigation Menu -->
+  <nav class="nav-links">
+    <ng-container *ngIf="isAuthenticated">
+      <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      
+      <!-- Employee sees their travel requests -->
+      <ng-container *ngIf="isRegular()">
+        <a mat-button routerLink="/travel-requests" routerLinkActive="active">My Travel Requests</a>
+      </ng-container>
+
+      <!-- Admin sees admin options -->
+      <ng-container *ngIf="isAdmin()">
+        <a mat-button routerLink="/admin/users" routerLinkActive="active">Manage Users</a>
+      </ng-container>
+    </ng-container>
+  </nav>
+
+  <!-- User Menu -->
+  <div class="user-menu">
+    <ng-container *ngIf="!isAuthenticated">
+      <a mat-button routerLink="/login">Login</a>
+      <a mat-raised-button routerLink="/signup" color="accent">Sign Up</a>
+    </ng-container>
+
+    <ng-container *ngIf="isAuthenticated">
+      <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
+        <mat-icon>account_circle</mat-icon>
+        <span class="username">{{ currentUser?.firstName || 'User' }}</span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <div class="user-info-header">
+          <div class="user-info">
+            <span class="user-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</span>
+            <span class="user-email">{{ currentUser?.email }}</span>
+            <span class="user-role">{{ currentUser?.userType }}</span>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>My Profile</span>
+        </button>
+
+        <!-- Employee-specific menu items -->
+        <ng-container *ngIf="isRegular()">
+          <button mat-menu-item (click)="navigateToTravelRequests()">
+            <mat-icon>luggage</mat-icon>
+            <span>My Travel Requests</span>
+          </button>
+        </ng-container>
+
+        <!-- Admin-specific menu items -->
+        <ng-container *ngIf="isAdmin()">
+          <button mat-menu-item (click)="navigateToAdminUsers()">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Manage Users</span>
+          </button>
+        </ng-container>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </ng-container>
+  </div>
+</mat-toolbar>

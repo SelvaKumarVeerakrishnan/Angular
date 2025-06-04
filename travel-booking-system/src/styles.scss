@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Ensure all main content starts below the fixed header
+.main-content {
+  padding-top: 64px; // Height of the header
+  min-height: calc(100vh - 64px);
+  box-sizing: border-box;
+}

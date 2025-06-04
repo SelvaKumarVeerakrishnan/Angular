@@ -1,0 +1,49 @@
+.admin-users-container {
+  padding: 20px;
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  .table-container {
+    overflow: auto;
+    border-radius: 4px;
+    
+    table {
+      width: 100%;
+      
+      th {
+        font-weight: 500;
+        color: #666;
+        padding: 12px 16px;
+      }
+
+      td {
+        padding: 12px 16px;
+
+        &.mat-column-status {
+          width: 120px;
+        }
+
+        &.mat-column-userType {
+          width: 140px;
+        }
+
+        &.mat-column-actions {
+          width: 60px;
+          text-align: right;
+        }
+      }
+
+      tr.mat-row:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+  
+  .user-type-label {
+    margin-left: 8px;
+    font-size: 0.85em;
+    color: rgba(0, 0, 0, 0.54);
+  }
+}

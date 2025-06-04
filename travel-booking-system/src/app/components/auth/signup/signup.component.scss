@@ -1,0 +1,904 @@
+@use "sass:color";
+
+// Variables - Colors
+$primary-color: #3f51b5;
+$primary-light: #7986cb;
+$primary-dark: #303f9f;
+$primary-gradient: linear-gradient(135deg, $primary-color, $primary-dark);
+$accent-color: #ff4081;
+$accent-light: #ff80ab;
+$accent-dark: #c60055;
+$accent-gradient: linear-gradient(135deg, $accent-color, $accent-dark);
+$error-color: #f44336;
+$error-bg: #ffebee;
+$success-color: #4caf50;
+$success-bg: #e8f5e9;
+$warning-color: #ff9800;
+$warning-bg: #fff3e0;
+$info-color: #2196f3;
+$info-bg: #e3f2fd;
+$card-bg: #ffffff;
+$card-gradient: linear-gradient(to bottom, #ffffff, #f8f9ff);
+$page-bg-start: #c5cae9;
+$page-bg-end: #7986cb;
+$text-primary: rgba(0, 0, 0, 0.87);
+$text-secondary: rgba(0, 0, 0, 0.6);
+$text-disabled: rgba(0, 0, 0, 0.38);
+$border-color: rgba(0, 0, 0, 0.12);
+// Form control sizes
+$input-height: 95px;
+$input-font-size: 28px;
+$label-font-size: 24px;
+$button-height: 80px;
+$button-font-size: 28px;
+$icon-size: 42px;
+
+// Shadows and borders
+$shadow-light: rgba(0, 0, 0, 0.05);
+$shadow-medium: rgba(0, 0, 0, 0.1);
+$shadow-dark: rgba(0, 0, 0, 0.2);
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// Transitions and animations
+$transition-quick: 0.15s ease;
+$transition-normal: 0.25s ease;
+$transition-slow: 0.4s ease;
+
+// Breakpoints
+$mobile-breakpoint: 600px;
+$tablet-breakpoint: 960px;
+
+// Font weights
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// Font sizes
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$font-size-xxl: 32px;
+// Mixins
+@mixin card-shadow {
+  box-shadow: 0 2px 10px $shadow-light, 0 1px 5px $shadow-medium;
+}
+
+@mixin card-shadow-hover {
+  box-shadow: 0 4px 20px $shadow-medium, 0 2px 10px $shadow-light;
+}
+
+@mixin input-focus {
+  border-color: $primary-color;
+  box-shadow: 0 0 0 1px $primary-light;
+}
+
+@mixin button-hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba($primary-color, 0.3);
+}
+
+@mixin button-active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba($primary-color, 0.2);
+}
+
+@mixin transition-standard {
+  transition: all $transition-normal;
+}
+
+@mixin focus-outline {
+  &:focus-visible {
+    outline: 2px solid $primary-light;
+    outline-offset: 2px;
+  }
+}
+// Main Styles
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  color: $text-primary;
+  background-color: #fafafa;
+}
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $page-bg-start, $page-bg-end);
+  padding: $spacing-lg;
+  position: relative;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba($primary-color, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba($accent-color, 0.1) 0%, transparent 40%);
+    z-index: 0;
+  }
+  
+  @media (max-width: $mobile-breakpoint) {
+    padding: $spacing-md;
+    align-items: flex-start;
+    padding-top: $spacing-lg;
+  }
+}
+
+.signup-card-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.signup-card {
+  width: 100%;
+  background: $card-bg;
+  border-radius: $border-radius-md;
+  @include card-shadow;
+  overflow: hidden;
+  @include transition-standard;
+  
+  &:hover {
+    @include card-shadow-hover;
+  }
+  .signup-header {
+    padding: $spacing-xl $spacing-lg $spacing-md;
+    background: $primary-gradient;
+    color: white;
+    text-align: center;
+    position: relative;
+    
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent);
+    }
+  }
+  
+  .signup-title {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    margin: 0 0 $spacing-sm;
+    color: white;
+  }
+  
+  .signup-subtitle {
+    font-size: $font-size-md;
+    font-weight: $font-weight-normal;
+    margin: 0;
+    opacity: 0.9;
+  }
+  
+  mat-card-content {
+    padding: $spacing-xxl $spacing-xl $spacing-xl;
+    
+    @media (max-width: $mobile-breakpoint) {
+      padding: $spacing-lg $spacing-md;
+    }
+  }
+  
+  .form-section {
+    margin-bottom: $spacing-xxl;
+    
+    &:last-child {
+      margin-bottom: $spacing-lg;
+    }
+  }
+  
+  .section-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $primary-dark;
+    margin: 0 0 $spacing-md;
+    padding-bottom: $spacing-xs;
+    border-bottom: 1px solid $border-color;
+  }
+  
+  .signup-footer {
+    padding: $spacing-lg;
+    display: flex;
+    justify-content: center;
+    background-color: #f5f5f5;
+    border-top: 1px solid $border-color;
+    
+    @media (max-width: $mobile-breakpoint) {
+      padding: $spacing-md;
+    }
+  }
+}
+// Form layout
+.name-row {
+  display: flex;
+  gap: $spacing-md;
+  width: 100%;
+  
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.half-width {
+  flex: 1;
+  
+  @media (max-width: $mobile-breakpoint) {
+    width: 100%;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+// Material form field overrides
+::ng-deep {
+  // Form field styles
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: $spacing-xl;
+    font-size: $font-size-lg;
+  }
+  
+  .mat-form-field-wrapper {
+    padding-bottom: 1.5em;
+  }
+
+  // Add specific class for larger controls
+  .form-field-large {
+    margin-bottom: $spacing-xl;
+  }
+  
+  // Fill appearance specific styles
+  .mat-form-field-appearance-fill {
+    .mat-form-field-flex {
+      min-height: $input-height;
+      padding: $spacing-xl $spacing-xl $spacing-lg !important;
+      background-color: rgba($primary-color, 0.05);
+      border-radius: $border-radius-md;
+      transition: all $transition-normal;
+      border: 2px solid rgba($primary-color, 0.15);
+      
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+        border-color: rgba($primary-color, 0.3);
+        box-shadow: 0 8px 16px rgba($primary-color, 0.15);
+      }
+    }
+    
+    &.mat-focused .mat-form-field-flex {
+      background-color: rgba($primary-color, 0.12);
+      border-color: $primary-color;
+      box-shadow: 0 10px 24px rgba($primary-color, 0.25);
+      transform: translateY(-3px);
+    }
+    
+    .mat-form-field-infix {
+      padding: $spacing-xl 0 $spacing-md;
+      border-top-width: 16px;
+    }
+    
+    .mat-form-field-underline {
+      bottom: 0;
+      height: 2px;
+      
+      .mat-form-field-ripple {
+        background-color: $primary-color;
+        height: 2px;
+      }
+    }
+    
+    .mat-form-field-label-wrapper {
+      top: -0.5em;
+    }
+  }
+  
+  // Label styles
+  .mat-form-field-label {
+    color: $text-secondary;
+    font-size: $label-font-size;
+  }
+  
+  // Input styles
+  .mat-input-element {
+    font-size: $input-font-size;
+    color: $text-primary;
+    caret-color: $primary-color;
+  }
+  
+  // Icon button within form fields
+  .mat-form-field {
+    .mat-icon-button {
+      width: $icon-size * 1.5;
+      height: $icon-size * 1.5;
+      
+      .mat-icon {
+        font-size: $icon-size;
+        width: $icon-size;
+        height: $icon-size;
+        line-height: $icon-size;
+      }
+    }
+    
+    &.form-field-large {
+      .mat-icon-button {
+        width: $icon-size * 1.75;
+        height: $icon-size * 1.75;
+        
+        .mat-icon {
+          font-size: $icon-size * 1.2;
+          width: $icon-size * 1.2;
+          height: $icon-size * 1.2;
+          line-height: $icon-size * 1.2;
+        }
+      }
+    }
+  }
+  
+  // Error message styles
+  .mat-error {
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+  }
+  
+  // Mat select styles
+  .mat-select-value {
+    color: $text-primary;
+    font-size: $input-font-size;
+  }
+  
+  .mat-select-arrow {
+    color: $primary-color;
+  }
+  
+  // Select panel
+  .mat-select-panel {
+    .mat-option {
+      font-size: $font-size-md;
+      height: 48px;
+      line-height: 48px;
+      
+      &.mat-selected:not(.mat-option-multiple) {
+        background: rgba($primary-color, 0.1);
+      }
+      
+      &:hover:not(.mat-option-disabled) {
+        background: rgba($primary-color, 0.05);
+      }
+    }
+  }
+  
+  // Suffix icon in form fields
+  .mat-form-field-suffix {
+    .mat-icon {
+      color: $text-secondary;
+    }
+  }
+  
+  // Date picker styles
+  .mat-datepicker-toggle {
+    .mat-icon-button {
+      width: 80px;
+      height: 80px;
+      background-color: rgba($primary-color, 0.15);
+      margin-right: $spacing-md;
+      transition: all $transition-normal;
+      border: 2px solid rgba($primary-color, 0.2);
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba($primary-color, 0.2);
+      
+      &:hover {
+        background-color: rgba($primary-color, 0.25);
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba($primary-color, 0.3);
+        border-color: $primary-color;
+      }
+      
+      &:active {
+        transform: scale(0.98);
+        box-shadow: 0 2px 8px rgba($primary-color, 0.2);
+      }
+      
+      .mat-datepicker-toggle-default-icon {
+        width: 55px;
+        height: 55px;
+        color: $primary-dark;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+      }
+    }
+  }
+  
+  // Special styles for date field
+  .date-field {
+    .mat-form-field-flex {
+      padding-right: $spacing-xxl * 2 !important;
+      background: linear-gradient(to right, rgba($primary-color, 0.05), rgba($primary-color, 0.15)) !important;
+      border-width: 3px !important;
+      border-color: rgba($primary-color, 0.35) !important;
+      box-shadow: 0 6px 16px rgba($primary-color, 0.1) !important;
+    }
+    
+    &:hover .mat-form-field-flex {
+      background: linear-gradient(to right, rgba($primary-color, 0.08), rgba($primary-color, 0.2)) !important;
+      border-color: rgba($primary-color, 0.5) !important;
+      box-shadow: 0 8px 20px rgba($primary-color, 0.15) !important;
+    }
+    
+    &.mat-focused .mat-form-field-flex {
+      background: linear-gradient(to right, rgba($primary-color, 0.1), rgba($primary-color, 0.25)) !important;
+      border-color: $primary-color !important;
+      box-shadow: 0 10px 24px rgba($primary-color, 0.2) !important;
+    }
+    
+    .mat-form-field-suffix {
+      position: absolute;
+      right: $spacing-lg;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    // Make the input text stand out more
+    input.mat-input-element {
+      font-size: $input-font-size * 1.1;
+      font-weight: 600;
+      color: $primary-dark;
+      letter-spacing: 0.5px;
+    }
+    
+    // Add special label styling
+    .mat-form-field-label {
+      color: $primary-dark;
+      font-weight: 500;
+    }
+    
+    // Add a subtle highlight to draw attention
+    &::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: rgba($accent-color, 0.15);
+      animation: pulse-subtle 2s infinite;
+    }
+  }
+  
+  // Calendar popup styles
+  .mat-datepicker-content {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    border: 3px solid $primary-color !important;
+    transform: scale(1.2);
+    transform-origin: top center;
+    
+    .mat-calendar {
+      width: 520px;
+      height: 580px;
+      background-color: white;
+    }
+    
+    .mat-calendar-header {
+      padding: $spacing-lg;
+      background-color: $primary-color;
+      color: white;
+      
+      .mat-calendar-controls {
+        margin: $spacing-md 0;
+        height: 60px;
+        
+        .mat-calendar-period-button,
+        .mat-calendar-previous-button,
+        .mat-calendar-next-button {
+          font-size: $font-size-xl * 1.2;
+          color: white;
+          
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+          }
+        }
+      }
+    }
+    
+    .mat-calendar-table-header th {
+      font-size: $font-size-xl;
+      padding: $spacing-md 0;
+      font-weight: 600;
+      color: $primary-dark;
+    }
+    
+    .mat-calendar-table {
+      padding: $spacing-md;
+    }
+    
+    .mat-calendar-body-cell {
+      height: 70px;
+      width: 70px;
+      
+      .mat-calendar-body-cell-content {
+        font-size: $font-size-xl * 1.2;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        font-weight: 500;
+        
+        &:hover {
+          background-color: rgba($primary-color, 0.1);
+        }
+      }
+    }
+    
+    .mat-calendar-body-selected {
+      background-color: $primary-color;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 6px 16px rgba($primary-color, 0.5);
+      transform: scale(1.15);
+      border-radius: 50%;
+    }
+    
+    .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+      border-color: $accent-color;
+      border-width: 4px;
+      background-color: rgba($accent-color, 0.1);
+      position: relative;
+      
+      &::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: $accent-color;
+      }
+    }
+  }
+  
+  // Input autofill style override
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: $text-primary !important;
+  }
+}
+// Button styles
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-xxl;
+  margin-bottom: $spacing-xl;
+  
+  .submit-button {
+    width: 100%;
+    height: $button-height;
+    font-size: $button-font-size;
+    font-weight: $font-weight-medium;
+    border-radius: $border-radius-md;
+    letter-spacing: 0.5px;
+    @include transition-standard;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 $spacing-xxl;
+    box-shadow: 0 6px 16px rgba($primary-color, 0.3);
+    
+    &:not([disabled]):hover {
+      @include button-hover;
+      background-color: color.adjust($primary-color, $lightness: -5%);
+    }
+    
+    &:not([disabled]):active {
+      @include button-active;
+    }
+    
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    
+    .spinner {
+      margin-right: $spacing-sm;
+    }
+    
+    @include focus-outline;
+  }
+}
+
+// Visibility toggle button style
+.visibility-toggle {
+  color: $text-secondary;
+}
+// Error and validation styles
+.error-message {
+  display: flex;
+  align-items: center;
+  background-color: $error-bg;
+  color: $error-color;
+  padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-lg;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  border-left: 3px solid $error-color;
+  animation: fadeIn $transition-normal;
+  
+  .error-icon {
+    margin-right: $spacing-sm;
+    color: $error-color;
+  }
+}
+
+.password-match-error {
+  display: flex;
+  align-items: center;
+  color: $error-color;
+  font-size: $font-size-sm;
+  margin-top: -$spacing-sm;
+  margin-bottom: $spacing-md;
+  
+  .error-icon {
+    margin-right: $spacing-xs;
+    font-size: $font-size-md;
+  }
+}
+
+.password-hint {
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  margin-top: -$spacing-md;
+  margin-bottom: $spacing-md;
+  padding-left: $spacing-sm;
+}
+// Login link styles
+.login-link {
+  text-align: center;
+  font-size: $font-size-md;
+  color: $text-secondary;
+  
+  .login-button {
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    @include transition-standard;
+    display: inline-block;
+    margin-left: $spacing-xs;
+    
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+      text-decoration: underline;
+    }
+    
+    &:active {
+      background-color: rgba($primary-color, 0.1);
+    }
+    
+    @include focus-outline;
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Media queries for responsive design
+@media (max-width: $mobile-breakpoint) {
+  .signup-header {
+    padding: $spacing-lg $spacing-md $spacing-md;
+    
+    .signup-title {
+      font-size: $font-size-xl;
+    }
+    
+    .signup-subtitle {
+      font-size: $font-size-sm;
+    }
+  }
+  
+  .section-title {
+    font-size: $font-size-md;
+    margin-bottom: $spacing-sm;
+  }
+  
+  .form-section {
+    margin-bottom: $spacing-lg;
+  }
+  
+  .button-container {
+    margin-top: $spacing-xl;
+    
+    .submit-button {
+      height: 56px;
+      font-size: $font-size-lg;
+    }
+  }
+  
+  ::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-flex {
+      min-height: 64px;
+    }
+    
+    .mat-form-field {
+      margin-bottom: $spacing-md;
+    }
+    
+    .mat-input-element, .mat-select-value {
+      font-size: $font-size-md;
+    }
+  }
+}
+
+// Additional helper classes
+.form-field-large {
+  .mat-form-field-flex {
+    min-height: $input-height !important;
+    padding: $spacing-xl $spacing-xl $spacing-lg !important;
+  }
+  
+  .mat-form-field-infix {
+    font-size: $input-font-size;
+    padding: $spacing-xl 0 $spacing-lg !important;
+  }
+  
+  .mat-form-field-label {
+    font-size: $label-font-size;
+    font-weight: 500;
+  }
+  
+  // Make icons larger in form fields
+  .mat-icon {
+    font-size: $icon-size;
+    width: $icon-size;
+    height: $icon-size;
+    line-height: $icon-size;
+  }
+  
+  // Add subtle glow effect on focus
+  &.mat-focused {
+    .mat-form-field-flex {
+      box-shadow: 0 0 0 1px $primary-light, 0 6px 16px rgba($primary-color, 0.25);
+    }
+  }
+}
+
+.large-button {
+  font-size: $button-font-size;
+  height: $button-height;
+  padding: $spacing-md $spacing-xxl;
+  box-shadow: 0 8px 20px rgba($primary-color, 0.35) !important;
+  font-weight: bold !important;
+  letter-spacing: 1px;
+  
+  &:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 12px 28px rgba($primary-color, 0.4) !important;
+  }
+}
+
+// Special class for date field
+.date-field {
+  position: relative;
+  
+  .mat-form-field-flex {
+    background-color: rgba($primary-color, 0.1) !important;
+    border-width: 3px !important;
+    border-color: rgba($primary-color, 0.3) !important;
+  }
+  
+  input.mat-input-element {
+    font-size: $input-font-size;
+    font-weight: 600;
+    font-size: $input-font-size * 1.1;
+  }
+}
+
+// Make calendar panel more visible
+.custom-datepicker {
+  transform: scale(1.25);
+  margin-top: $spacing-xl;
+  
+  // Target the datepicker panel to ensure proper visibility
+  .mat-datepicker-content {
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5) !important;
+    border: 4px solid rgba($primary-color, 0.5);
+    
+    // Add a subtle glow effect
+    &::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: radial-gradient(ellipse at center, rgba($primary-color, 0.2) 0%, transparent 70%);
+      z-index: -1;
+    }
+  }
+}
+
+// Add special animation for date picker toggle to draw attention
+.date-field .mat-datepicker-toggle .mat-icon-button {
+  animation: pulse-subtle 2s infinite;
+}
+
+@keyframes pulse-subtle {
+  0% { transform: scale(1) translateY(-50%); }
+  50% { transform: scale(1.08) translateY(-50%); background-color: rgba($primary-color, 0.25); }
+  100% { transform: scale(1) translateY(-50%); }
+}
+
+// Add a hint about the date picker to make it more obvious
+.date-field::before {
+  content: "Click calendar icon →";
+  position: absolute;
+  top: -22px;
+  right: 80px;
+  font-size: $font-size-sm;
+  color: $accent-color;
+  font-weight: 500;
+  background-color: rgba($accent-color, 0.1);
+  padding: 2px 8px;
+  border-radius: 12px;
+  pointer-events: none;
+  animation: fadeInOut 4s infinite;
+  z-index: 1;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-1 {
+  margin-top: $spacing-sm;
+}
+
+.mt-2 {
+  margin-top: $spacing-md;
+}
+
+.mb-1 {
+  margin-bottom: $spacing-sm;
+}
+
+.mb-2 {
+  margin-bottom: $spacing-md;
+}

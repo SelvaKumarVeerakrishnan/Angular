@@ -2,7 +2,7 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.12.
 
-## Screenshots
+## Screenshot
 
 ![Screenshot 1](images/Screenshot%202025-06-09%20at%207.28.09%20PM.png)
 

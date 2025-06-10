@@ -7,13 +7,13 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ![Screenshot 1](https://github.com/SelvaKumarVeerakrishnan/Angular/blob/main/travel-booking-system/images/Screenshot%202025-06-09%20at%207.28.09%E2%80%AFPM.png)
 
-![Screenshot 2](travel-booking-system/images/Screenshot 2025-06-09 at 7.28.23 PM.png)
+![Screenshot 2](https://github.com/SelvaKumarVeerakrishnan/Angular/blob/main/travel-booking-system/images/Screenshot%202025-06-09%20at%207.28.23%E2%80%AFPM.png)
 
-![Screenshot 3](travel-booking-system/images/Screenshot 2025-06-09 at 7.28.36 PM.png)
+![Screenshot 3](https://github.com/SelvaKumarVeerakrishnan/Angular/blob/main/travel-booking-system/images/Screenshot%202025-06-09%20at%207.28.36%E2%80%AFPM.png)
 
-![Screenshot 4](travel-booking-system/images/Screenshot 2025-06-09 at 7.28.48 PM.png)
+![Screenshot 4](https://github.com/SelvaKumarVeerakrishnan/Angular/blob/main/travel-booking-system/images/Screenshot%202025-06-09%20at%207.28.48%E2%80%AFPM.png)
 
-![Screenshot 5](travel-booking-system/images/Screenshot 2025-06-09 at 7.29.33 PM.png)
+![Screenshot 5](https://github.com/SelvaKumarVeerakrishnan/Angular/blob/main/travel-booking-system/images/Screenshot%202025-06-09%20at%207.29.33%E2%80%AFPM.png)
 
 ## Development server
 

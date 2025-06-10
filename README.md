@@ -5,7 +5,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Screenshot
 
-![Screenshot 1](SelvaKumarVeerakrishnan/Angular/travel-booking-system/images/Screenshot 2025-06-09 at 7.28.09 PM.png)
+![Screenshot 1](https://github.com/SelvaKumarVeerakrishnan/Angular/blob/main/travel-booking-system/images/Screenshot%202025-06-09%20at%207.28.09%E2%80%AFPM.png)
 
 ![Screenshot 2](travel-booking-system/images/Screenshot 2025-06-09 at 7.28.23 PM.png)
 

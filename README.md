@@ -2,17 +2,18 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.12.
 
+
 ## Screenshot
 
-![Screenshot 1](images/Screenshot%202025-06-09%20at%207.28.09%20PM.png)
+![Screenshot 1](travel-booking-system/images/Screenshot 2025-06-09 at 7.28.09 PM.png)
 
-![Screenshot 2](images/Screenshot%202025-06-09%20at%207.28.23%20PM.png)
+![Screenshot 2](travel-booking-system/images/Screenshot 2025-06-09 at 7.28.23 PM.png)
 
-![Screenshot 3](images/Screenshot%202025-06-09%20at%207.28.36%20PM.png)
+![Screenshot 3](travel-booking-system/images/Screenshot 2025-06-09 at 7.28.36 PM.png)
 
-![Screenshot 4](images/Screenshot%202025-06-09%20at%207.28.48%20PM.png)
+![Screenshot 4](travel-booking-system/images/Screenshot 2025-06-09 at 7.28.48 PM.png)
 
-![Screenshot 5](images/Screenshot%202025-06-09%20at%207.29.33%20PM.png)
+![Screenshot 5](travel-booking-system/images/Screenshot 2025-06-09 at 7.29.33 PM.png)
 
 ## Development server
 
